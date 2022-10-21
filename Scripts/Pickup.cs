@@ -21,18 +21,18 @@ public class Pickup : MonoBehaviourPun
 
         if (collision.CompareTag("Player"))
         {
+            Debug.Log("Pickup");
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 
             if (type == PickupType.Gold)
+            {
                 player.photonView.RPC("GiveGold", player.photonPlayer, value);
+                Debug.Log("I Like Money");
+            }
             else if (type == PickupType.Health)
+            {
                 player.photonView.RPC("Heal", player.photonPlayer, value);
-
-            // destroy the object
-            // PhotonNetwork.Destroy(gameObject);
-            // BUG: pickups don't get removed from game and throw error:
-            // "Failed to 'network-remove' GameObject because it is missing a valid InstantiationId on view"
-            // https://forum.photonengine.com/discussion/15373/failed-to-network-remove-gameobject-because-it-is-missing-a-valid-instantiationid-on-view
+            }
             photonView.RPC("DestroyPickup", RpcTarget.AllBuffered);
         }
     }

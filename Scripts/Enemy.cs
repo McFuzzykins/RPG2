@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviourPun
             float dist = Vector3.Distance(transform.position, targetPlayer.transform.position);
 
             //if we're able to attack: do so
-            if(dist < attackRange && Time.time - lastAttackTime >= attackRange)
+            if(dist < attackRange && Time.time - lastAttackTime >= attackRate)
             {
                 Attack();
             }
@@ -74,12 +74,15 @@ public class Enemy : MonoBehaviourPun
 
     void Attack()
     {
+        Debug.Log("Smack");
         lastAttackTime = Time.time;
         targetPlayer.photonView.RPC("TakeDamage", targetPlayer.photonPlayer, dmg);
+        Debug.Log("Get Smacked");
     }
 
     void DetectPlayer()
     {
+        
         if(Time.time - lastPlayerDetectTime > playerDetectRate)
         {
             //loop through all players
@@ -107,7 +110,7 @@ public class Enemy : MonoBehaviourPun
     }
 
     [PunRPC]
-    void TakeDamage (int damage)
+    public void TakeDamage (int damage)
     {
         curHp -= damage;
 

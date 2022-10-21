@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviourPun
     {
         id = player.ActorNumber;
         photonPlayer = player;
+        GameManager.instance.players[id - 1] = this;
 
         //initialize healthbar
         headerInfo.Initialize(player.NickName, maxHp);
